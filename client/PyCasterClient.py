@@ -21,10 +21,9 @@ class PyCaster:
         try:
             if config.PyCasterSSL:
                 self._socket = SSLSocket.SSLSocket().socket()
-                self._socket.connect((config.PyCasterHost, config.PyCasterPort))
             else:
                 self._socket = socket.socket()
-                self._socket.connect((config.PyCasterHost, config.PyCasterPort))
+            self._socket.connect((config.PyCasterHost, config.PyCasterPort))
         except Exception as e:
             raise PyCasterError.PyCasterConnect(e.message)
         self.init()
@@ -56,7 +55,7 @@ class PyCaster:
         self.id3['length'] = mp3.info.length
         self.id3['stream-start'] = time.time() * 1000
         self.event(info=self.id3)
-        log.log("Now Playing: " + title, 0)
+        log.log(f"Now Playing: {title}", 0)
         log.log("Loop: %s\nShuffle: %s" % (config.loop, config.shuffle), 0)
         return f
 
