@@ -2,34 +2,33 @@ import time
 from termcolor import colored
 
 
-_log = list()
+_log = []
 
 def Log(msg, evt="info"):
-    f = open("log/PyCasterServer.log", "r")
-    for line in f.readlines():
-        _log.append(line.strip())
-    f.close()
+    with open("log/PyCasterServer.log", "r") as f:
+        for line in f.readlines():
+            _log.append(line.strip())
     m = ""
     if evt == "info":
-        m = '[INF] - '+ time.ctime() + " " + msg
+        m = f'[INF] - {time.ctime()} {msg}'
         return '['+colored("INF", 'green')+'] - ' + colored(time.ctime(), 'magenta', attrs=['underline']) + " "+ colored(msg, color="cyan")
 
     elif evt == "err":
-        m = '[ERR] - ' + time.ctime() + " " + msg
+        m = f'[ERR] - {time.ctime()} {msg}'
         return '['+colored("ERR", 'red')+'] - ' + colored(time.ctime(), 'magenta', attrs=['underline']) + " "+ colored(msg, color="red")
     elif evt == "warn":
-        m = '[WRN] - ' + time.ctime() + " " + msg
+        m = f'[WRN] - {time.ctime()} {msg}'
         return '['+colored("WRN", 'yellow')+'] - ' + colored(time.ctime(), 'magenta', attrs=['underline']) + " "+ colored(msg, color="yellow")
     if len(_log) == 0:
         _log.append(m)
         f=open("log/PyCasterServer.log", 'w')
-        f.write("LOG STARTED: " + time.ctime() + '\n' + m)
-        f.close()
+        f.write(f"LOG STARTED: {time.ctime()}" + '\n' + m)
     else:
         _log.append(m)
         f = open("log/PyCasterServer.log", 'w')
         f.write('\n'.join(_log))
-        f.close()
+
+    f.close()
  
 def log(msg, evt="info"):
     print(Log(msg, evt))

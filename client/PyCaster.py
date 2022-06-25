@@ -21,14 +21,13 @@ class PyCaster(PyCasterClient.PyCaster):
         if all values are None it sets values from config.py
         """
         if directory and pattern:
-            songs = self.load_from_dir(directory=directory, pattern=pattern)
+            return self.load_from_dir(directory=directory, pattern=pattern)
         elif directory:
-            songs = self.load_from_dir(directory=directory)
+            return self.load_from_dir(directory=directory)
         elif pattern:
-            songs = self.load_from_dir(pattern=pattern)
+            return self.load_from_dir(pattern=pattern)
         else:
-            songs = self.load_from_dir()
-        return songs
+            return self.load_from_dir()
 
     def load_playlist(self, playlist = None):
         """
